@@ -1,7 +1,6 @@
 package com.echecs.modele;
 
 public class Board {
-	// Un tableau 2D(8x8) d'objets Piece
 	private final Piece[][] boardGrid;
 
 	public Board() {
@@ -39,7 +38,6 @@ public class Board {
 		return true;
 	}
 
-	// Methods
 	public void display() {
 		System.out.println("\n  0 1 2 3 4 5 6 7"); // Index des colonnes
 		for (int i = 0; i < 8; i++) {
@@ -57,7 +55,6 @@ public class Board {
 	}
 
 	public void movePiece(int startRow, int startCol, int endRow, int endCol) {
-		// Recupere la piece qui se trouve sur la case de depart
 		Piece pieceToMove = boardGrid[startRow][startCol];
 
 		// Verifie s'il y a bien une piece a deplacer
@@ -69,7 +66,7 @@ public class Board {
 		// On demande a la piece si elle a le droit de faire ce mouvement
 		if (!pieceToMove.isValidMove(startRow, startCol, endRow, endCol)) {
 			System.out.println("Mouvement invalide pour cette piece");
-			return; // On arrete tout, le coup est annule
+			return;
 		}
 
 		if (!isPathClear(startRow, startCol, endRow, endCol)) {
@@ -77,10 +74,7 @@ public class Board {
 			return;
 		}
 
-		// Placer la piece sur la case de d'arrivee
 		boardGrid[endRow][endCol] = pieceToMove;
-
-		// Vider la case de depart
 		boardGrid[startRow][startCol] = null;
 
 		System.out.print("Deplacement reussi");

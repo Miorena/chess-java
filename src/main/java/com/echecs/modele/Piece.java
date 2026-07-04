@@ -1,11 +1,9 @@
 package com.echecs.modele;
 
 public class Piece {
-	// Attributs
 	private final String pieceName;
-	private final String pieceColor; // Noir & Blanc
+	private final String pieceColor;
 
-	// Constructuer
 	public Piece(String pieceName, String pieceColor) {
 		this.pieceName = pieceName;
 		this.pieceColor = pieceColor;
@@ -34,7 +32,6 @@ public class Piece {
 		return true;
 	}
 
-	// Getters
 	public String getPieceName() {
 		return pieceName;
 	}

@@ -12,7 +12,7 @@ public class Main {
 		boolean isRunning = true;
 
 		while(isRunning) {
-			board.display(); // Affiche l'echiquier initial
+			board.display();
 			
 			System.out.println("--- c'est votre tour (Format: Ligne Colonne)");
 
