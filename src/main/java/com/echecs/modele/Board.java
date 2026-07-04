@@ -56,6 +56,7 @@ public class Board {
 
 	public void movePiece(int startRow, int startCol, int endRow, int endCol) {
 		Piece pieceToMove = boardGrid[startRow][startCol];
+		Piece pieceAtDestination = boardGrid[endRow][endCol];
 
 		// Verifie s'il y a bien une piece a deplacer
 		if (pieceToMove == null) {
@@ -72,6 +73,13 @@ public class Board {
 		if (!isPathClear(startRow, startCol, endRow, endCol)) {
 			System.out.println("Deplacement impocible: le chemin est bloqué !");
 			return;
+		}
+
+		if (pieceAtDestination != null) {
+			if (pieceToMove.getPieceColor().equals(pieceAtDestination.getPieceColor())) {
+				System.out.println("Erreur: Case de même couleur sur la case cible");
+				return;
+			}
 		}
 
 		boardGrid[endRow][endCol] = pieceToMove;
