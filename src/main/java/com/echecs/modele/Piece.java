@@ -1,26 +1,21 @@
 package com.echecs.modele;
 
 public abstract class Piece {
-	// Attribut
-	private final String pieceColor;
 
-	// Constructeur
-	public Piece(String pieceColor) {
+	private final Color pieceColor;
+
+	public Piece(Color pieceColor) {
 		this.pieceColor = pieceColor;
 	}
 
-	// Getter concrète
-	public String getPieceColor() {
+	public Color getPieceColor() {
 		return pieceColor;
 	}
 
-	// Getter abstraite
 	public abstract String getPieceName();
 
-	// Methode abstraite
 	public abstract boolean isValidMove(int startRow, int startCol, int endRow, int endCol);
 
-	// Method concrète
 	protected boolean isStraightLine(int startRow, int startCol, int endRow, int endCol) {
 		if (startRow == endRow && startCol == endCol) {
 			return false;

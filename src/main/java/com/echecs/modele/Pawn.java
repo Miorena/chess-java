@@ -1,7 +1,8 @@
 package com.echecs.modele;
 
 public class Pawn extends Piece {
-	public Pawn(String pieceColor) {
+
+	public Pawn(Color pieceColor) {
 		super(pieceColor);
 	}
 
@@ -12,8 +13,8 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean isValidMove(int startRow, int startCol, int endRow, int endCol) {
-		int pawnDirection = getPieceColor().equals("BLACK") ? 1 : -1;
-		int pawnStartingRow = getPieceColor().equals("BLACK") ? 1 : 6;
+		int pawnDirection = getPieceColor() == Color.BLACK ? 1 : -1;
+		int pawnStartingRow = getPieceColor() == Color.BLACK ? 1 : 6;
 
 		if (startRow == endRow && startCol == endCol) {
 			return false;
@@ -27,7 +28,7 @@ public class Pawn extends Piece {
 	}
 
 	public boolean isValidCapture(int startRow, int startCol, int endRow, int endCol) {
-		int pawnDirection = getPieceColor().equals("BLACK") ? 1 : -1;
+		int pawnDirection = getPieceColor() == Color.BLACK ? 1 : -1;
 
 		if (startRow == endRow && startCol == endCol) {
 			return false;

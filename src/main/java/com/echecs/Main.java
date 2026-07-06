@@ -1,6 +1,8 @@
 package com.echecs;
 
+import com.echecs.controleur.Game;
 import com.echecs.modele.Board;
+
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +10,7 @@ public class Main {
 		System.out.println("=== My Chess Game ===");
 
 		Board board = new Board();
+		Game game = new Game(board);
 		Scanner scanner = new Scanner(System.in);
 		boolean isRunning = true;
 
@@ -27,7 +30,7 @@ public class Main {
 			int endCol = scanner.nextInt();
 
 			System.out.println("\nAction enregistree...");
-			board.movePiece(startRow, startCol, endRow, endCol);
+			game.playerMove(startRow, startCol, endRow, endCol);
 
 			System.out.println("==============================================");
 		}

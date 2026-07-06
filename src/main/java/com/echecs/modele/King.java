@@ -1,7 +1,8 @@
 package com.echecs.modele;
 
 public class King extends Piece {
-	public King(String colorPiece) {
+
+	public King(Color colorPiece) {
 		super(colorPiece);
 	}
 

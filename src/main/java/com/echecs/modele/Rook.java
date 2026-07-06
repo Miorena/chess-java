@@ -1,7 +1,8 @@
 package com.echecs.modele;
 
 public class Rook extends Piece {
-	public Rook(String pieceColor) {
+
+	public Rook(Color pieceColor) {
 		super(pieceColor);
 	}
 

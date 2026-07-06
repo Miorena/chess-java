@@ -1,7 +1,8 @@
 package com.echecs.modele;
 
 public class Bishop extends Piece {
-	public Bishop(String pieceColor) {
+
+	public Bishop(Color pieceColor) {
 		super(pieceColor);
 	}
 
