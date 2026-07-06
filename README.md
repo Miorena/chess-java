@@ -1,52 +1,47 @@
 # My Chess Game
-
 Un projet personnel de jeu d'échecs en Java, développé d'abord en mode terminal, avec une interface graphique prévue dans un second temps.
-
 ## ⚠️ Statut du projet : EN COURS DE DÉVELOPPEMENT (WIP)
-
-**Ce projet n'est pas encore fonctionnel de bout en bout.** Une refactorisation majeure de l'architecture des pièces est en cours, et le module `Board` n'a pas encore été mis à jour pour s'adapter aux nouvelles classes.
-
+Le cœur du jeu (règles de déplacement, plateau, tours) est fonctionnel et testé en terminal. Il manque encore des règles avancées (échec, roque, promotion) et l'interface graphique.
 ### Ce qui est fait ✅
-
-- `Piece` a été transformée en classe **abstraite** avec deux méthodes abstraites (`getPieceName()`, `isValidMove()`) et deux méthodes partagées (`isStraightLine()`, `isDiagonal()`).
-- Chaque type de pièce a désormais sa propre classe, héritant de `Piece` :
-  - `Rook` (Tour)
-  - `Bishop` (Fou)
-  - `Queen` (Dame)
-  - `King` (Roi)
-  - `Knight` (Cavalier)
-  - `Pawn` (Pion) — inclut en plus une méthode `isValidCapture()` dédiée à la prise en diagonale, séparée du déplacement classique.
-
+- `Piece` est une classe **abstraite** avec deux méthodes abstraites (`getPieceName()`, `isValidMove()`) et deux méthodes partagées (`isStraightLine()`, `isDiagonal()`).
+- Chaque type de pièce a sa propre classe, héritant de `Piece` :
+- `Rook` (Tour)
+- `Bishop` (Fou)
+- `Queen` (Dame)
+- `King` (Roi)
+- `Knight` (Cavalier)
+- `Pawn` (Pion) — avec en plus `isValidCapture()`, dédiée à la prise en diagonale, séparée du déplacement classique.
+- La couleur des pièces utilise désormais un `enum Color` (`WHITE`/`BLACK`) plutôt qu'un `String`.
+- `Board.createPiece()` instancie la bonne sous-classe selon le type de pièce.
+- `Board.initializeBoard()` peuple correctement le plateau avec les vraies sous-classes.
+- `Board.isPathClear()` gère les 3 cas de déplacement : vertical, horizontal, et diagonal.
+- `Board.movePiece()` vérifie qu'une pièce est bien présente sur la case de départ, que le chemin est dégagé, empêche de capturer une pièce de sa propre couleur, distingue le déplacement classique du Pion (`isValidMove()`) de sa capture en diagonale (`isValidCapture()`), et renvoie un `boolean` indiquant si le coup a été accepté.
+- `Game.playerMove()` orchestre une partie complète : vérifie que c'est bien le tour du joueur propriétaire de la pièce, délègue le coup à `Board.movePiece()`, et alterne le tour (`WHITE`/`BLACK`) si le coup est accepté.
+- `Main.java` utilise désormais `Game` (et non plus `Board` directement) pour jouer un coup — le flux complet a été testé en terminal avec succès (déplacements, captures, alternance des tours).
 ### Ce qui reste à faire 🚧
-
-- **`Board.java` n'est PAS encore adapté** : `initializeBoard()` utilise encore `new Piece(...)`, ce qui ne compile plus puisque `Piece` est désormais abstraite. **Le projet ne compile pas en l'état.**
-- `movePiece()` doit être mis à jour pour gérer le cas particulier du Pion (appeler `isValidMove()` ou `isValidCapture()` selon que la case cible est vide ou occupée par une pièce adverse).
-- Pas encore de gestion des tours de jeu (alternance blanc/noir).
 - Pas encore de détection d'échec / échec et mat.
 - Pas encore de roque, ni de prise en passant, ni de promotion du pion.
+- Pas encore de validation empêchant un joueur de se mettre lui-même en échec.
 - Interface graphique (JavaFX ou Swing) : pas commencée, prévue une fois la logique de jeu en terminal stabilisée.
-
 ## Architecture
-
 ```
 com.echecs
 ├── Main.java              # Point d'entrée, boucle de jeu en terminal
+├── controleur
+│   └── Game.java          # Gestion des tours, orchestre les coups
 └── modele
     ├── Piece.java          # Classe abstraite mère
+    ├── Color.java          # Enum WHITE / BLACK
     ├── Rook.java
     ├── Bishop.java
     ├── Queen.java
     ├── King.java
     ├── Knight.java
     ├── Pawn.java
-    └── Board.java          # ⚠️ Pas encore à jour avec les sous-classes
+    └── Board.java          # Plateau, création des pièces, validation des coups
 ```
-
 ## Prochaines étapes
-
-1. Adapter `Board.initializeBoard()` pour instancier les bonnes sous-classes.
-2. Adapter `Board.movePiece()` pour distinguer déplacement et capture du Pion.
-3. Étendre `isPathClear()` pour gérer les diagonales (Fou, Dame).
-4. Ajouter la gestion de l'alternance des tours.
-5. Détection d'échec et échec et mat.
-6. Interface graphique.
+1. Détection d'échec et échec et mat (nécessite de simuler un coup et vérifier si le Roi est menacé).
+2. Empêcher un joueur de jouer un coup qui le mettrait lui-même en échec.
+3. Roque, prise en passant, promotion du pion.
+4. Interface graphique.
