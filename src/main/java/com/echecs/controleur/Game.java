@@ -1,4 +1,5 @@
 package com.echecs.controleur;
+
 import com.echecs.modele.Board;
 import com.echecs.modele.Color;
 import com.echecs.modele.Piece;
@@ -14,7 +15,7 @@ public class Game {
 
 	public boolean playerMove(int startRow, int startCol, int endRow, int endCol) {
 		Piece pieceToMove = board.getPieceAt(startRow, startCol);
-		
+
 		if (pieceToMove == null) {
 			System.out.println("Erreur: Il n'y a pas de piece sur la case de depart");
 			return false;
@@ -29,6 +30,9 @@ public class Game {
 
 		if (moveSuccesful) {
 			playerTurn = (playerTurn == Color.WHITE ? Color.BLACK : Color.WHITE);
+			if (board.isInCheck(playerTurn)) {
+				System.out.println("Echec au Roi " + playerTurn + " !");
+			}
 		}
 
 		return moveSuccesful;

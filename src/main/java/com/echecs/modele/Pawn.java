@@ -16,7 +16,7 @@ public class Pawn extends Piece {
 		int pawnDirection = getPieceColor() == Color.BLACK ? 1 : -1;
 		int pawnStartingRow = getPieceColor() == Color.BLACK ? 1 : 6;
 
-		if (startRow == endRow && startCol == endCol) {
+		if (isSamePosition(startRow, startCol, endRow, endCol)) {
 			return false;
 		}
 
@@ -30,7 +30,7 @@ public class Pawn extends Piece {
 	public boolean isValidCapture(int startRow, int startCol, int endRow, int endCol) {
 		int pawnDirection = getPieceColor() == Color.BLACK ? 1 : -1;
 
-		if (startRow == endRow && startCol == endCol) {
+		if (isSamePosition(startRow, startCol, endRow, endCol)) {
 			return false;
 		}
 

@@ -79,7 +79,16 @@ public class Board {
 		System.out.println();
 	}
 
+	private boolean isInBounds(int row, int col) {
+		return row >= 0 && row <= 7 && col >= 0 && col <= 7;
+	}
+
 	public boolean movePiece(int startRow, int startCol, int endRow, int endCol) {
+		if (!isInBounds(startRow, startCol) || !isInBounds(endRow, endCol)) {
+			System.out.println("Erreur: Coordonnées hors du plateau");
+			return false;
+		}
+
 		Piece pieceToMove = boardGrid[startRow][startCol];
 		Piece pieceAtDestination = boardGrid[endRow][endCol];
 
@@ -117,11 +126,61 @@ public class Board {
 		boardGrid[endRow][endCol] = pieceToMove;
 		boardGrid[startRow][startCol] = null;
 
-		System.out.print("Deplacement reussi");
+		System.out.print("Deplacement reussi\n");
 		return true;
 	}
 
 	public Piece getPieceAt(int row, int col) {
+		if (!isInBounds(row, col)) {
+			return null;
+		}
 		return boardGrid[row][col];
+	}
+
+	private int[] findKing(Color color) {
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				Piece piece = boardGrid[row][col];
+				if (piece instanceof King && piece.getPieceColor() == color) {
+					return new int[] { row, col };
+				}
+			}
+		}
+		return null;
+	}
+
+	private boolean isSquareAttacked(int row, int col, Color byColor) {
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				Piece piece = boardGrid[r][c];
+
+				if (piece == null || piece.getPieceColor() != byColor) {
+					continue;
+				}
+
+				boolean canReachSquare;
+				if (piece instanceof Pawn pawn) {
+					canReachSquare = pawn.isValidCapture(r, c, row, col);
+				} else {
+					canReachSquare = piece.isValidMove(r, c, row, col);
+				}
+
+				if (canReachSquare && isPathClear(r, c, row, col)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean isInCheck(Color color) {
+		int[] kingPosition = findKing(color);
+
+		if (kingPosition == null) {
+			return false;
+		}
+
+		Color opponentColor = (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+		return isSquareAttacked(kingPosition[0], kingPosition[1], opponentColor);
 	}
 }

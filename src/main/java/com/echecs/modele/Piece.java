@@ -16,8 +16,12 @@ public abstract class Piece {
 
 	public abstract boolean isValidMove(int startRow, int startCol, int endRow, int endCol);
 
+	protected boolean isSamePosition(int startRow, int startCol, int endRow, int endCol) {
+		return startRow == endRow && startCol == endCol;
+	}
+
 	protected boolean isStraightLine(int startRow, int startCol, int endRow, int endCol) {
-		if (startRow == endRow && startCol == endCol) {
+		if (isSamePosition(startRow, startCol, endRow, endCol)) {
 			return false;
 		}
 		return (startRow == endRow) || (startCol == endCol);
@@ -27,10 +31,11 @@ public abstract class Piece {
 		int deltaRow = endRow - startRow;
 		int deltaCol = endCol - startCol;
 
-		if (startRow == endRow && startCol == endCol) {
+		if (isSamePosition(startRow, startCol, endRow, endCol)) {
 			return false;
 		}
 
 		return (Math.abs(deltaCol) == Math.abs(deltaRow));
 	}
+
 }

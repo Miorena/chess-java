@@ -16,7 +16,7 @@ public class King extends Piece {
 		int deltaCol = endCol - startCol;
 		int deltaRow = endRow - startRow;
 
-		if (startRow == endRow && startCol == endCol) {
+		if (isSamePosition(startRow, startCol, endRow, endCol)) {
 			return false;
 		}
 
